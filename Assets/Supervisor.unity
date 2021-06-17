@@ -623,7 +623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 8400000, guid: d7e5df77592b7e2418c2c06b9f4a6a8b, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -851,6 +851,7 @@ GameObject:
   - component: {fileID: 921215901}
   - component: {fileID: 921215900}
   - component: {fileID: 921215903}
+  - component: {fileID: 921215904}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -955,6 +956,18 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &921215904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921215899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2dd3b5f527ae6847adb712f8d17f2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1062642417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 8400000, guid: 71d8750512d61d840b7488fb4c9d85be, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
