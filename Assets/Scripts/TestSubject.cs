@@ -7,12 +7,15 @@ using Mirror.Discovery;
 public class TestSubject : MonoSingleton<TestSubject>
 {
     private NetworkManager networkManager;
+    private NetworkDiscovery networkDiscovery;
 
     void Start()
     {
-        GetComponent<NetworkDiscovery>().StartDiscovery();
+        networkDiscovery = FindObjectOfType<NetworkDiscovery>();
+        networkDiscovery.StartDiscovery();
 
         networkManager = FindObjectOfType<NetworkManager>();
         networkManager.StartHost();
+        networkDiscovery.AdvertiseServer();
     }
 }

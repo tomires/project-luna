@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TestSubject.unity
     guid: e5e1c857276e0f54c95fbcac305984d4
+  - enabled: 1
+    path: Assets/Environment.unity
+    guid: a9dfe6d8f9fc54d4699e15dd40931097
   m_configObjects: {}
