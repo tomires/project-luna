@@ -37,7 +37,7 @@ public class TestSubject : MonoSingleton<TestSubject>
     private IEnumerator SynchronizePovCamera()
     {
         yield return new WaitForSeconds(1.0f);
-        povCamera = GameObject.Find(Constants.PovCameraName);
+        povCamera = CameraReference.Instance.PovCamera.gameObject;
 
         while (true)
         {

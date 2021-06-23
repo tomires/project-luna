@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Supervisor : MonoSingleton<Supervisor>
@@ -17,9 +18,11 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     [Header("Supervisor")]
     [SerializeField] private GameObject supervisorPanel;
+    [SerializeField] private Text collisionCountText;
 
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
+    private State state;
     private List<IPEndPoint> discoveredServers = new List<IPEndPoint>();
     private LineRenderer lineRenderer;
     private Transform povCamera;
@@ -37,9 +40,17 @@ public class Supervisor : MonoSingleton<Supervisor>
         networkDiscovery.StartDiscovery();
     }
 
+    private void IncreaseCollisionCount()
+    {
+        collisionCountText.text = state.CollisionCount.ToString();
+    }
+
     private IEnumerator DrawLine()
     {
-        while(true)
+        yield return new WaitForSeconds(1.0f);
+        povCamera = CameraReference.Instance.PovCamera.transform;
+        povCamera.gameObject.SetActive(true);
+        while (true)
         {
             var position = lineRenderer.positionCount++;
             lineRenderer.SetPosition(position, povCamera.position);
@@ -72,8 +83,8 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void OnSceneLoad(Scene scene)
     {
         if (scene.name != Constants.EnvironmentScene) return;
-
-        povCamera = GameObject.Find(Constants.PovCameraName).transform;
         drawingCoroutine = StartCoroutine(DrawLine());
+        state = FindObjectOfType<State>();
+        state.OnCollision = IncreaseCollisionCount;
     }
 }
