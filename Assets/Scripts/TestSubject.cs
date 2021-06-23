@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class TestSubject : MonoSingleton<TestSubject>
 {
+    [SerializeField] private GameObject statePrefab;
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
     private GameObject vrCamera;
     private GameObject povCamera;
+    private bool hostEntered = false;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class TestSubject : MonoSingleton<TestSubject>
         networkManager = FindObjectOfType<NetworkManager>();
         networkManager.StartHost();
         networkDiscovery.AdvertiseServer();
+        NetworkServer.RegisterHandler<ReadyMessage>(OnClientReady);
 
         /* VR Camera is the only camera we have with AudioListener attached to it */
         vrCamera = FindObjectOfType<AudioListener>().gameObject;
@@ -32,6 +35,20 @@ public class TestSubject : MonoSingleton<TestSubject>
     {
         if (scene.name != Constants.EnvironmentScene) return;
         StartCoroutine(SynchronizePovCamera());
+    }
+
+    private void OnClientReady(NetworkConnection conn, ReadyMessage msg)
+    {
+        if(!hostEntered)
+        {
+            hostEntered = true;
+            return;
+        }
+
+        Debug.Log("Client joined: " + conn);
+        NetworkServer.SetClientReady(conn);
+        GameObject state = Instantiate(statePrefab);
+        NetworkServer.Spawn(state);
     }
 
     private IEnumerator SynchronizePovCamera()

@@ -9,7 +9,7 @@ public class State : NetworkBehaviour
     public Action<int> TimeTicked;
     public Action OnCollision;
 
-    [SyncVar(hook = "SecondsSinceStartChanged")]
+    [SyncVar(hook = nameof(SecondsSinceStartChanged))]
     public int SecondsSinceStart = 0;
 
     [SyncVar]

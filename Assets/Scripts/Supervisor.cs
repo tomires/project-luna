@@ -84,7 +84,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     {
         if (scene.name != Constants.EnvironmentScene) return;
         drawingCoroutine = StartCoroutine(DrawLine());
-        state = FindObjectOfType<State>();
-        state.OnCollision = IncreaseCollisionCount;
+        /*state = FindObjectOfType<State>();
+        state.OnCollision = IncreaseCollisionCount;*/
     }
 }
