@@ -59,11 +59,14 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     private void ResetLine()
     {
+        StopCoroutine(drawingCoroutine);
         lineRenderer.positionCount = 0;
 
         foreach (var collisionPrefab in spawnedCollisionPrefabs)
             Destroy(collisionPrefab);
         spawnedCollisionPrefabs.Clear();
+
+        drawingCoroutine = StartCoroutine(DrawLine());
     }
 
     private void OnServerFound(ServerResponse response)
@@ -105,7 +108,6 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void UpdateCollisionCount(int collisionCount)
     {
         collisionCountText.text = collisionCount.ToString();
-        if (!povCamera) return;
         var collisionIndicator = Instantiate(collisionPrefab, povCamera.position, Quaternion.identity);
         spawnedCollisionPrefabs.Add(collisionIndicator);
     }
@@ -118,6 +120,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void UpdateRoom(int newRoom)
     {
         roomText.text = newRoom.ToString();
+        ArrowManager.Instance.ChangeArrowDirection();
         ResetLine();
     }
 }

@@ -35,9 +35,8 @@ public class State : NetworkBehaviour
     {
         while(true)
         {
-            SecondsSinceStart += 1;
+            SecondsSinceStart++;
             yield return new WaitForSecondsRealtime(1.0f);
-            CollisionCount++;
         }
     }
 
@@ -46,6 +45,7 @@ public class State : NetworkBehaviour
         SecondsSinceStart = 0;
         CollisionCount = 0;
         CurrentRoom += 1;
+        ArrowManager.Instance.ChangeArrowDirection();
     }
 
     private void CollisionCountChanged(int oldCollisionCount, int newCollisionCount)
