@@ -5,7 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class Initializer : MonoSingleton<Initializer>
 {
-    // Update is called once per frame
+    Coroutine autoSwitch;
+
+    private void Awake()
+    {
+        SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);
+        //autoSwitch = StartCoroutine(SwitchToVr());
+    }
+
+    private void OnDestroy()
+    {
+        if(autoSwitch != null)
+            StopCoroutine(autoSwitch);
+    }
+
+    private IEnumerator SwitchToVr()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
