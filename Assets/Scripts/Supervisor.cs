@@ -19,6 +19,8 @@ public class Supervisor : MonoSingleton<Supervisor>
     [Header("Supervisor")]
     [SerializeField] private GameObject supervisorPanel;
     [SerializeField] private Text collisionCountText;
+    [SerializeField] private Text timeText;
+    [SerializeField] private Text roomText;
 
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
@@ -38,11 +40,6 @@ public class Supervisor : MonoSingleton<Supervisor>
         networkDiscovery = FindObjectOfType<NetworkDiscovery>();
         networkDiscovery.OnServerFound.AddListener(OnServerFound);
         networkDiscovery.StartDiscovery();
-    }
-
-    private void IncreaseCollisionCount()
-    {
-        collisionCountText.text = state.CollisionCount.ToString();
     }
 
     private IEnumerator DrawLine()
@@ -84,7 +81,33 @@ public class Supervisor : MonoSingleton<Supervisor>
     {
         if (scene.name != Constants.EnvironmentScene) return;
         drawingCoroutine = StartCoroutine(DrawLine());
-        /*state = FindObjectOfType<State>();
-        state.OnCollision = IncreaseCollisionCount;*/
+        StartCoroutine(CreateStateHooks());
+    }
+
+    private IEnumerator CreateStateHooks()
+    {
+        while(state == null)
+        {
+            state = FindObjectOfType<State>();
+            yield return new WaitForSecondsRealtime(0.2f);
+        }
+        state.OnCollision = UpdateCollisionCount;
+        state.TimeTicked = UpdateTime;
+        state.OnRoomChanged = UpdateRoom;
+    }
+
+    private void UpdateCollisionCount(int collisionCount)
+    {
+        collisionCountText.text = collisionCount.ToString();
+    }
+
+    private void UpdateTime(int seconds)
+    {
+        timeText.text = $"{Mathf.Floor(seconds / 60):00}:{seconds % 60:00}";
+    }
+
+    private void UpdateRoom(int newRoom)
+    {
+        roomText.text = newRoom.ToString();
     }
 }

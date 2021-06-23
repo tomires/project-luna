@@ -7,13 +7,18 @@ using System;
 public class State : NetworkBehaviour
 {
     public Action<int> TimeTicked;
-    public Action OnCollision;
+    public Action<int> OnCollision;
+    public Action<int> OnRoomChanged;
+    public Action OnExperimentEnded;
 
     [SyncVar(hook = nameof(SecondsSinceStartChanged))]
     public int SecondsSinceStart = 0;
 
-    [SyncVar]
+    [SyncVar(hook = nameof(CollisionCountChanged))]
     public int CollisionCount = 0;
+
+    [SyncVar(hook = nameof(RoomChanged))]
+    public int CurrentRoom = 0;
 
     private void Awake()
     {
@@ -32,23 +37,25 @@ public class State : NetworkBehaviour
         {
             SecondsSinceStart += 1;
             yield return new WaitForSecondsRealtime(1.0f);
-            Debug.Log("A");
             CollisionCount++;
-            TriggerCollision();
         }
     }
 
-    [ClientRpc]
     public void ChangeLevel()
     {
-        Debug.Log("LVL UP");
+        SecondsSinceStart = 0;
+        CollisionCount = 0;
+        CurrentRoom += 1;
     }
 
-    [ClientRpc]
-    public void TriggerCollision()
+    private void CollisionCountChanged(int oldCollisionCount, int newCollisionCount)
     {
-        Debug.Log("COLLISION");
-        OnCollision?.Invoke();
+        OnCollision?.Invoke(newCollisionCount);
+    }
+
+    private void RoomChanged(int oldRoom, int newRoom)
+    {
+        OnRoomChanged?.Invoke(newRoom);
     }
 
     private void SecondsSinceStartChanged(int oldSeconds, int newSeconds)

@@ -373,7 +373,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 
 --- !u!222 &460789869
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1111,7 +1111,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0:26
+  m_Text: 
 --- !u!222 &1117289515
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1250,7 +1250,9 @@ MonoBehaviour:
   deviceButtonPrefab: {fileID: 2448810337947858092, guid: 0a37c74e3f9969f419ac613fbd28299f, type: 3}
   deviceButtonParent: {fileID: 1374601366}
   supervisorPanel: {fileID: 1577907859}
-  collisionCountText: {fileID: 1579405224}
+  collisionCountText: {fileID: 460789868}
+  timeText: {fileID: 1117289514}
+  roomText: {fileID: 1605567934}
 --- !u!4 &1188638760
 Transform:
   m_ObjectHideFlags: 0
@@ -1997,7 +1999,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1/5
+  m_Text: 
 --- !u!222 &1605567935
 CanvasRenderer:
   m_ObjectHideFlags: 0
