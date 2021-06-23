@@ -21,6 +21,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     [SerializeField] private Text collisionCountText;
     [SerializeField] private Text timeText;
     [SerializeField] private Text roomText;
+    [SerializeField] private GameObject collisionPrefab;
 
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
@@ -29,6 +30,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     private LineRenderer lineRenderer;
     private Transform povCamera;
     private Coroutine drawingCoroutine;
+    private List<GameObject> spawnedCollisionPrefabs = new List<GameObject>();
 
     void Awake()
     {
@@ -58,6 +60,10 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void ResetLine()
     {
         lineRenderer.positionCount = 0;
+
+        foreach (var collisionPrefab in spawnedCollisionPrefabs)
+            Destroy(collisionPrefab);
+        spawnedCollisionPrefabs.Clear();
     }
 
     private void OnServerFound(ServerResponse response)
@@ -99,6 +105,9 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void UpdateCollisionCount(int collisionCount)
     {
         collisionCountText.text = collisionCount.ToString();
+        if (!povCamera) return;
+        var collisionIndicator = Instantiate(collisionPrefab, povCamera.position, Quaternion.identity);
+        spawnedCollisionPrefabs.Add(collisionIndicator);
     }
 
     private void UpdateTime(int seconds)
@@ -109,5 +118,6 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void UpdateRoom(int newRoom)
     {
         roomText.text = newRoom.ToString();
+        ResetLine();
     }
 }

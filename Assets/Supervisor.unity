@@ -1253,6 +1253,7 @@ MonoBehaviour:
   collisionCountText: {fileID: 460789868}
   timeText: {fileID: 1117289514}
   roomText: {fileID: 1605567934}
+  collisionPrefab: {fileID: 8619982152292905325, guid: 64379d92e621171459e3961c2036f5fe, type: 3}
 --- !u!4 &1188638760
 Transform:
   m_ObjectHideFlags: 0
