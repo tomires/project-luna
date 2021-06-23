@@ -9,8 +9,8 @@ public class Initializer : MonoSingleton<Initializer>
 
     private void Awake()
     {
-        SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
-        //SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);
         //autoSwitch = StartCoroutine(SwitchToVr());
     }
 

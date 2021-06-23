@@ -135,8 +135,6 @@ GameObject:
   - component: {fileID: 1462925955}
   - component: {fileID: 1462925954}
   - component: {fileID: 1462925953}
-  - component: {fileID: 1462925958}
-  - component: {fileID: 1462925957}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -207,7 +205,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: Assets/Environment.unity
   transport: {fileID: 1462925954}
-  networkAddress: 192.168.100.103
+  networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
@@ -231,40 +229,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1462925957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462925952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b492e59317fae84ba7e49696036e201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  SecondsSinceStart: 0
-  CollisionCount: 0
-  CurrentRoom: 0
---- !u!114 &1462925958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462925952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 994537302
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1714602223
 GameObject:
   m_ObjectHideFlags: 0

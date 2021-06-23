@@ -13,6 +13,7 @@ public class TestSubject : MonoSingleton<TestSubject>
     private GameObject vrCamera;
     private GameObject povCamera;
     private bool hostEntered = false;
+    private GameObject state;
 
     void Start()
     {
@@ -45,9 +46,11 @@ public class TestSubject : MonoSingleton<TestSubject>
             return;
         }
 
+        if (state) return;
+
         Debug.Log("Client joined: " + conn);
         NetworkServer.SetClientReady(conn);
-        GameObject state = Instantiate(statePrefab);
+        state = Instantiate(statePrefab);
         NetworkServer.Spawn(state);
     }
 

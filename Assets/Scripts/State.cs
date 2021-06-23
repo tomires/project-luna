@@ -48,6 +48,12 @@ public class State : NetworkBehaviour
         ArrowManager.Instance.ChangeArrowDirection();
     }
 
+    [ClientRpc]
+    public void EndExperiment()
+    {
+        OnExperimentEnded?.Invoke();
+    }
+
     private void CollisionCountChanged(int oldCollisionCount, int newCollisionCount)
     {
         OnCollision?.Invoke(newCollisionCount);
