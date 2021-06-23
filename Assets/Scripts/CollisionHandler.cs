@@ -2,16 +2,9 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    private State state;
-
-    private void Awake()
-    {
-        state = FindObjectOfType<State>();    
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if(state)
+        foreach (var state in FindObjectsOfType<State>())
             state.CollisionCount++;
     }
 }
