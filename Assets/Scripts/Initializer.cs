@@ -1,36 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Initializer : MonoSingleton<Initializer>
 {
-    Coroutine autoSwitch;
+    [SerializeField] private bool supervisor = false;
 
     private void Awake()
     {
-        //SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
-        SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);
-        //autoSwitch = StartCoroutine(SwitchToVr());
-    }
-
-    private void OnDestroy()
-    {
-        if(autoSwitch != null)
-            StopCoroutine(autoSwitch);
-    }
-
-    private IEnumerator SwitchToVr()
-    {
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
+        if(supervisor)
             SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);
-        else if (Input.GetKeyDown(KeyCode.S))
+        else
             SceneManager.LoadScene("TestSubject", LoadSceneMode.Additive);
     }
 }
