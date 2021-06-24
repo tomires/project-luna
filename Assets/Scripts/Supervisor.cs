@@ -17,6 +17,8 @@ public class Supervisor : MonoSingleton<Supervisor>
     [SerializeField] private GameObject deviceSelectionPanel;
     [SerializeField] private GameObject deviceButtonPrefab;
     [SerializeField] private Transform deviceButtonParent;
+    [SerializeField] private InputField manualIpInput;
+    [SerializeField] private Button manualIpConfirmButton;
 
     [Header("Supervisor")]
     [SerializeField] private GameObject supervisorPanel;
@@ -42,6 +44,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     {
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoad(scene);
+        manualIpConfirmButton.onClick.AddListener(OnManualIpEntry);
 
         lineRenderer = GetComponent<LineRenderer>();
         networkManager = FindObjectOfType<NetworkManager>();
@@ -60,9 +63,16 @@ public class Supervisor : MonoSingleton<Supervisor>
         }
     }
 
+    private void OnManualIpEntry()
+    {
+        var uri = new Uri($"kcp://{manualIpInput.text}");
+        networkDiscovery.StopDiscovery();
+        networkManager.StartClient(uri);
+        ConnectToServer(uri);
+    }
+
     private IEnumerator DrawLine()
     {
-        //transform.SetParent(CameraReference.Instance.TopDownCamera.transform);
         yield return new WaitForSeconds(1.0f);
         povCamera = CameraReference.Instance.PovCamera.transform;
         povCamera.gameObject.SetActive(true);
@@ -76,14 +86,11 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     private void ResetLine()
     {
-        //StopCoroutine(drawingCoroutine);
         lineRenderer.positionCount = 0;
 
         foreach (var collisionPrefab in spawnedCollisionPrefabs)
             Destroy(collisionPrefab);
         spawnedCollisionPrefabs.Clear();
-
-        //drawingCoroutine = StartCoroutine(DrawLine());
     }
 
     private void OnServerFound(ServerResponse response)
