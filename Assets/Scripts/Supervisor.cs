@@ -27,6 +27,9 @@ public class Supervisor : MonoSingleton<Supervisor>
     [SerializeField] private Text roomText;
     [SerializeField] private GameObject collisionPrefab;
 
+    [Header("Supervisor")]
+    [SerializeField] private GameObject completionPanel;
+
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
     private State state;
@@ -154,6 +157,8 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     private void EndExperiment()
     {
+        supervisorPanel.SetActive(false);
+        completionPanel.SetActive(true);
         AppendText($"E:");
         experimentEnded = true;
         logFile.Close();
