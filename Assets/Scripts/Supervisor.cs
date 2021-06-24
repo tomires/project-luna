@@ -36,6 +36,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     private List<GameObject> spawnedCollisionPrefabs = new List<GameObject>();
 
     private FileStream logFile;
+    private bool experimentEnded = false;
 
     void Awake()
     {
@@ -146,7 +147,8 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     private void EndExperiment()
     {
-        Debug.Log("BOO");
+        AppendText($"E:");
+        experimentEnded = true;
         logFile.Close();
     }
 
@@ -158,12 +160,13 @@ public class Supervisor : MonoSingleton<Supervisor>
             File.Delete(path);
 
         logFile = File.Create(path);
+        AppendText($"P:{Constants.PositionLogPeriod.ToString()}");
 
-        while (true)
+        while (!experimentEnded)
         {
+            if (povCamera != null)
+                AppendText($"M:{povCamera.localPosition.ToString()}:{povCamera.localRotation.eulerAngles.ToString()}");
             yield return new WaitForSecondsRealtime(Constants.PositionLogPeriod);
-            if(povCamera != null)
-                AppendText($"M:{povCamera.position.ToString()}:{povCamera.rotation.eulerAngles.ToString()}");
         }
     }
 
