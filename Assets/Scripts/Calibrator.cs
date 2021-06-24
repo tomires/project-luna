@@ -9,6 +9,7 @@ public class Calibrator : MonoBehaviour
     private InputDevice lController;
     private float positioningSpeed = 0.01f;
     private float rotationSpeed = 0.3f;
+    private bool previouslyPressed = false;
 
     void Start()
     {
@@ -29,6 +30,13 @@ public class Calibrator : MonoBehaviour
         {
             if (Mathf.Abs(rJoystick.x) > 0.5f)
                 transform.rotation *= Quaternion.Euler(rotationSpeed * rJoystick.x * Vector3.up);
+        }
+
+        if(rController.TryGetFeatureValue(CommonUsages.primaryButton, out bool pressed))
+        {
+            if (pressed && !previouslyPressed && FindObjectOfType<State>())
+                FindObjectOfType<State>().ChangeLevel();
+            previouslyPressed = pressed;
         }
     }
 }

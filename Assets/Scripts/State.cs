@@ -62,6 +62,7 @@ public class State : NetworkBehaviour
     private void RoomChanged(int oldRoom, int newRoom)
     {
         OnRoomChanged?.Invoke(newRoom);
+        EnvironmentSwitcher.Instance.MoveToNextEnvironment();
     }
 
     private void SecondsSinceStartChanged(int oldSeconds, int newSeconds)

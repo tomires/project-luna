@@ -4,7 +4,11 @@ public class CollisionHandler : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        foreach (var state in FindObjectsOfType<State>())
-            state.CollisionCount++;
+        if (other.tag == "Teleporter")
+            foreach (var state in FindObjectsOfType<State>())
+                state.ChangeLevel();
+        else
+            foreach (var state in FindObjectsOfType<State>())
+                state.CollisionCount++;
     }
 }

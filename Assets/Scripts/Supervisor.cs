@@ -146,6 +146,7 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     private void EndExperiment()
     {
+        Debug.Log("BOO");
         logFile.Close();
     }
 
