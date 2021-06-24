@@ -118,6 +118,7 @@ public class Supervisor : MonoSingleton<Supervisor>
         if (scene.name != Constants.EnvironmentScene) return;
         drawingCoroutine = StartCoroutine(DrawLine());
         StartCoroutine(CreateStateHooks());
+        SupervisorLights.Instance.Show();
     }
 
     private IEnumerator CreateStateHooks()

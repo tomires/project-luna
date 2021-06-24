@@ -36,13 +36,6 @@ public class TestSubject : MonoSingleton<TestSubject>
     {
         if (scene.name != Constants.EnvironmentScene) return;
         StartCoroutine(SynchronizePovCamera());
-        StartCoroutine(HideLights());
-    }
-
-    private IEnumerator HideLights()
-    {
-        yield return new WaitForSeconds(1.0f);
-        SupervisorLights.Instance.Hide();
     }
 
     private void OnClientReady(NetworkConnection conn, ReadyMessage msg)

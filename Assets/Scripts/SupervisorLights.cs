@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class SupervisorLights : MonoSingleton<SupervisorLights>
 {
-    public void Hide()
+    public void Show()
     {
-        gameObject.SetActive(false);
+        foreach(var light in GetComponentsInChildren<Light>())
+            light.enabled = true;
     }
 }
