@@ -7,7 +7,7 @@ public class Calibrator : MonoBehaviour
 {
     private InputDevice rController;
     private InputDevice lController;
-    private float positioningSpeed = 0.01f;
+    private float positioningSpeed = 0.025f;
     private float rotationSpeed = 0.3f;
     private bool previouslyPressed = false;
 
