@@ -1,4 +1,5 @@
 using Mirror;
+using SFB;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -23,11 +24,18 @@ public class Playback : MonoBehaviour
         if (scene.name != Constants.EnvironmentScene) return;
         EnvironmentSwitcher.Instance.SwitchToPlaybackLayout();
         GetLineRenderers();
-        PlayLog($"{Application.persistentDataPath}/testlog.txt");
+        StandaloneFileBrowser.OpenFilePanelAsync("Select log to open", "", "luna", false, PlayLog);
     }
 
-    private void PlayLog(string path)
+    private void PlayLog(string[] paths)
     {
+        if (paths.Length == 0)
+        {
+            Application.Quit();
+            return;
+        }
+        var path = paths[0];
+
         var room = 0;
         var time = 0;
 
