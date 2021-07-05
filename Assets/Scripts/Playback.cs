@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class Playback : MonoBehaviour
 {
     [SerializeField] private RenderTexture outputTexture;
+    [SerializeField] private GameObject collisionPrefab;
     private List<LineRenderer> LineRenderers;
 
     void Start()
@@ -57,6 +58,7 @@ public class Playback : MonoBehaviour
                         room = int.Parse(line[1]);
                         break;
                     case Constants.LogActions.Collision:
+                        RenderCollision(room - 1);
                         break;
                     default:
                         break;
@@ -90,8 +92,9 @@ public class Playback : MonoBehaviour
         lineRenderer.SetPosition(pos, position + offset - 4 * Vector3.forward + 1.25f * Vector3.right);
     }
 
-    private void RenderCollision()
+    private void RenderCollision(int room)
     {
-
+        var lineRenderer = LineRenderers[room];
+        Instantiate(collisionPrefab, lineRenderer.GetPosition(lineRenderer.positionCount - 1), Quaternion.identity);
     }
 }
