@@ -5,6 +5,7 @@ public class Constants
     public const float PositionLogPeriod = 0.02f;
     public const int PlaybackEnvironmentsPerRow = 3;
     public const float PlaybackEnvironmentSpacing = 0.5f;
+    public const string LogExtension = "luna";
 
     public class LogActions
     {

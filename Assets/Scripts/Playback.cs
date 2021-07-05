@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class Playback : MonoBehaviour
 {
+    [SerializeField] private RenderTexture outputTexture;
     private List<LineRenderer> LineRenderers;
 
     void Start()
@@ -24,7 +25,7 @@ public class Playback : MonoBehaviour
         if (scene.name != Constants.EnvironmentScene) return;
         EnvironmentSwitcher.Instance.SwitchToPlaybackLayout();
         GetLineRenderers();
-        StandaloneFileBrowser.OpenFilePanelAsync("Select log to open", "", "luna", false, PlayLog);
+        StandaloneFileBrowser.OpenFilePanelAsync("Select log to process", "", Constants.LogExtension, false, PlayLog);
     }
 
     private void PlayLog(string[] paths)
@@ -34,8 +35,8 @@ public class Playback : MonoBehaviour
             Application.Quit();
             return;
         }
-        var path = paths[0];
 
+        var path = paths[0];
         var room = 0;
         var time = 0;
 
@@ -62,6 +63,16 @@ public class Playback : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(SaveLogIntoFile(path.Replace($".{Constants.LogExtension}", ".png")));
+    }
+
+    private IEnumerator SaveLogIntoFile(string path)
+    {
+        yield return new WaitForEndOfFrame();
+        var data = outputTexture.ToTexture2D().EncodeToPNG();
+        File.WriteAllBytes(path, data);
+        Application.Quit();
     }
 
     private void GetLineRenderers()
