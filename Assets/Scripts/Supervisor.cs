@@ -36,12 +36,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     private List<IPEndPoint> discoveredServers = new List<IPEndPoint>();
     private LineRenderer lineRenderer;
     private Transform povCamera;
-    private Transform topDownCamera;
-    private Coroutine drawingCoroutine;
     private List<GameObject> spawnedCollisionPrefabs = new List<GameObject>();
-
-    private FileStream logFile;
-    private bool experimentEnded = false;
 
     void Awake()
     {
@@ -54,8 +49,6 @@ public class Supervisor : MonoSingleton<Supervisor>
         networkDiscovery = FindObjectOfType<NetworkDiscovery>();
         networkDiscovery.OnServerFound.AddListener(OnServerFound);
         networkDiscovery.StartDiscovery();
-
-        StartCoroutine(LoggingRoutine());
     }
 
     private void Update()
@@ -116,7 +109,7 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void OnSceneLoad(Scene scene)
     {
         if (scene.name != Constants.EnvironmentScene) return;
-        drawingCoroutine = StartCoroutine(DrawLine());
+        StartCoroutine(DrawLine());
         StartCoroutine(CreateStateHooks());
         SupervisorLights.Instance.Show();
     }
@@ -139,13 +132,11 @@ public class Supervisor : MonoSingleton<Supervisor>
         collisionCountText.text = collisionCount.ToString();
         var collisionIndicator = Instantiate(collisionPrefab, povCamera.position, Quaternion.identity);
         spawnedCollisionPrefabs.Add(collisionIndicator);
-        AppendText($"C:{collisionCount.ToString()}");
     }
 
     private void UpdateTime(int seconds)
     {
         timeText.text = $"{Mathf.Floor(seconds / 60):00}:{seconds % 60:00}";
-        AppendText($"T:{seconds.ToString()}");
     }
 
     private void UpdateRoom(int newRoom)
@@ -153,39 +144,11 @@ public class Supervisor : MonoSingleton<Supervisor>
         roomText.text = newRoom.ToString();
         ArrowManager.Instance.ChangeArrowDirection();
         ResetLine();
-        AppendText($"R:{newRoom.ToString()}");
     }
 
     private void EndExperiment()
     {
         supervisorPanel.SetActive(false);
         completionPanel.SetActive(true);
-        AppendText($"E:");
-        experimentEnded = true;
-        logFile.Close();
-    }
-
-    private IEnumerator LoggingRoutine()
-    {
-        string path = $"{Application.persistentDataPath}/log_{DateTime.Now.ToString("yyyyMMdd_HHmm")}.txt";
-
-        if (File.Exists(path))
-            File.Delete(path);
-
-        logFile = File.Create(path);
-        AppendText($"P:{Constants.PositionLogPeriod.ToString()}");
-
-        while (!experimentEnded)
-        {
-            if (povCamera != null)
-                AppendText($"M:{povCamera.localPosition.ToString()}:{povCamera.localRotation.eulerAngles.ToString()}");
-            yield return new WaitForSecondsRealtime(Constants.PositionLogPeriod);
-        }
-    }
-
-    private void AppendText(string text)
-    {
-        byte[] info = new UTF8Encoding(true).GetBytes($"{text}\n");
-        logFile.Write(info, 0, info.Length);
     }
 }

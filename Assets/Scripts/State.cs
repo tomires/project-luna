@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using System;
 
+[RequireComponent(typeof(Logger))]
 public class State : NetworkBehaviour
 {
     public Action<int> TimeTicked;
@@ -20,9 +21,13 @@ public class State : NetworkBehaviour
     [SyncVar(hook = nameof(RoomChanged))]
     public int CurrentRoom = 0;
 
+    private Logger logger;
+    private bool logging = false;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        logger = GetComponent<Logger>();
     }
 
     public override void OnStartServer()
@@ -42,14 +47,33 @@ public class State : NetworkBehaviour
 
     public void ChangeLevel()
     {
+        if(!logging)
+        {
+            logger.StartLogging();
+            logging = true;
+        }
+
         SecondsSinceStart = 0;
         CollisionCount = 0;
         CurrentRoom += 1;
         ArrowManager.Instance.ChangeArrowDirection();
+        logger.ChangeRoom(CurrentRoom);
+    }
+
+    public void TriggerCollision()
+    {
+        CollisionCount++;
+        logger.PassCollision(CollisionCount);
+    }
+
+    public void EndExperiment()
+    {
+        logger.StopLogging();
+        EndExperimentClient();
     }
 
     [ClientRpc]
-    public void EndExperiment()
+    public void EndExperimentClient()
     {
         OnExperimentEnded?.Invoke();
     }

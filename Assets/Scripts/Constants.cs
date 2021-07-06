@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 public class Constants
 {
     public const string EnvironmentScene = "Environment";
@@ -6,6 +9,7 @@ public class Constants
     public const int PlaybackEnvironmentsPerRow = 3;
     public const float PlaybackEnvironmentSpacing = 0.5f;
     public const string LogExtension = "luna";
+    public static string LogPath = $"{Application.persistentDataPath}/log_{DateTime.Now.ToString("yyyyMMdd_HHmm")}.{LogExtension}";
 
     public class LogActions
     {

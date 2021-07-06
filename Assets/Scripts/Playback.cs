@@ -89,7 +89,7 @@ public class Playback : MonoBehaviour
         var lineRenderer = LineRenderers[room];
         var offset = lineRenderer.transform.position;
         var pos = lineRenderer.positionCount++;
-        lineRenderer.SetPosition(pos, position + offset - 4 * Vector3.forward + 1.25f * Vector3.right);
+        lineRenderer.SetPosition(pos, position + offset - 4 * Vector3.forward + 1.25f * Vector3.right); /* TODO */
     }
 
     private void RenderCollision(int room)

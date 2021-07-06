@@ -9,6 +9,6 @@ public class CollisionHandler : MonoBehaviour
                 state.ChangeLevel();
         else
             foreach (var state in FindObjectsOfType<State>())
-                state.CollisionCount++;
+                state.TriggerCollision();
     }
 }
