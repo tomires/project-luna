@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -10,12 +8,14 @@ public class Logger : MonoSingleton<Logger>
     private FileStream logFile;
     private Coroutine loggingRoutine;
     private Transform povCamera;
+    private Transform environment;
     private float roomTime;
     private int lastTimeTick;
 
     public void StartLogging()
     {
         povCamera = CameraReference.Instance.PovCamera.transform;
+        environment = Calibrator.Instance.transform;
         loggingRoutine = StartCoroutine(LoggingRoutine());
     }
 
@@ -45,6 +45,7 @@ public class Logger : MonoSingleton<Logger>
         logFile = File.Create(path);
         var timePeriod = Constants.PositionLogPeriod;
         LogPositionLogPeriod(timePeriod);
+        LogEnvironmentOffset();
 
         while (true)
         {
@@ -73,6 +74,10 @@ public class Logger : MonoSingleton<Logger>
     private void LogPositionLogPeriod(float timePeriod)
         => AppendText(Constants.LogActions.PositionLogPeriod,
             timePeriod.ToString());
+
+    private void LogEnvironmentOffset()
+        => AppendText(Constants.LogActions.EnvironmentOffset,
+            $"{environment.position.ToString()}:{environment.rotation.eulerAngles.ToString()}");
 
     private void LogExperimentEnd()
         => AppendText(Constants.LogActions.ExperimentEnd, "");

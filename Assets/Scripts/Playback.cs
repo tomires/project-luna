@@ -11,6 +11,8 @@ public class Playback : MonoBehaviour
     [SerializeField] private RenderTexture outputTexture;
     [SerializeField] private GameObject collisionPrefab;
     private List<LineRenderer> LineRenderers;
+    private Vector3 environmentOffsetPosition;
+    private Quaternion environmentOFfsetRotation;
 
     void Start()
     {
@@ -51,6 +53,10 @@ public class Playback : MonoBehaviour
                 {
                     case Constants.LogActions.PositionLog:
                         if(room != 0) RenderPosition(room - 1, Utils.DeserializeVector3(line[1]));
+                        break;
+                    case Constants.LogActions.EnvironmentOffset:
+                        environmentOffsetPosition = Utils.DeserializeVector3(line[1]);
+                        environmentOFfsetRotation = Quaternion.Euler(Utils.DeserializeVector3(line[2]));
                         break;
                     case Constants.LogActions.TimeTick:
                         break;

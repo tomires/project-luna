@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class Calibrator : MonoBehaviour
+public class Calibrator : MonoSingleton<Calibrator>
 {
     private InputDevice rController;
     private InputDevice lController;
