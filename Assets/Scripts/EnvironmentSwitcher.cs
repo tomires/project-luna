@@ -29,7 +29,7 @@ public class EnvironmentSwitcher : MonoSingleton<EnvironmentSwitcher>
             environments[currentEnvironment].SetActive(true);
             SetLights();
         }
-        else
+        else if (currentEnvironment == environments.Count)
         {
             environments[currentEnvironment - 1].SetActive(false);
             FindObjectOfType<State>().EndExperiment();

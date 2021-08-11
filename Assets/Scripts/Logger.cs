@@ -24,6 +24,7 @@ public class Logger : MonoSingleton<Logger>
         if(loggingRoutine != null)
             StopCoroutine(loggingRoutine);
         LogExperimentEnd();
+        logFile.Close();
     }
 
     public void ChangeRoom(int room)
