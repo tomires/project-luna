@@ -45,6 +45,7 @@ public class Logger : MonoSingleton<Logger>
         logFile = File.Create(path);
         var timePeriod = Constants.PositionLogPeriod;
         LogPositionLogPeriod(timePeriod);
+        LogLightningIntensity(Calibrator.Instance.MinLightIntensity, Calibrator.Instance.MaxLightIntensity);
         LogEnvironmentOffset();
 
         while (true)
@@ -93,6 +94,10 @@ public class Logger : MonoSingleton<Logger>
     private void LogCollision(int collisionCount)
         => AppendText(Constants.LogActions.Collision,
             collisionCount.ToString());
+
+    private void LogLightningIntensity(float minIntensity, float maxIntensity)
+        => AppendText(Constants.LogActions.IntensitySetting,
+            $"{minIntensity}:{maxIntensity}");
 
     private void AppendText(string action, string body)
     {

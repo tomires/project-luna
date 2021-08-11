@@ -8,6 +8,8 @@ public class EnvironmentSwitcher : MonoSingleton<EnvironmentSwitcher>
     [SerializeField] private GameObject floorReference;
     [SerializeField] private GameObject playbackBackgroundPrefab;
     [SerializeField] private List<GameObject> environments;
+    [SerializeField] private List<float> lightMultipliers;
+    [SerializeField] public List<Light> lights;
     public List<GameObject> Environments => environments;
 
     int currentEnvironment = -1;
@@ -25,6 +27,7 @@ public class EnvironmentSwitcher : MonoSingleton<EnvironmentSwitcher>
         {
             environments[currentEnvironment - 1].SetActive(false);
             environments[currentEnvironment].SetActive(true);
+            SetLights();
         }
         else
         {
@@ -54,5 +57,15 @@ public class EnvironmentSwitcher : MonoSingleton<EnvironmentSwitcher>
 
         foreach (var child in GetComponentsInChildren<Transform>())
             child.gameObject.SetActive(false);
+    }
+
+    private void SetLights()
+    {
+        var multiplier = lightMultipliers[currentEnvironment];
+        var offset = multiplier * Calibrator.Instance.LightIntensityVariance;
+        var intensity = Calibrator.Instance.MinLightIntensity + offset;
+
+        foreach (var light in lights)
+            light.intensity = intensity;
     }
 }

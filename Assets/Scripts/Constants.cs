@@ -20,5 +20,6 @@ public class Constants
         public const string PositionLogPeriod = "P";
         public const string ExperimentEnd = "E";
         public const string EnvironmentOffset = "O";
+        public const string IntensitySetting = "L";
     }
 }
