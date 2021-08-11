@@ -38,7 +38,7 @@ public class Calibrator : MonoSingleton<Calibrator>
     private InputDevice lController;
     private float positioningSpeed = 0.025f;
     private float rotationSpeed = 0.3f;
-    private float lightIntensityChangeSpeed = 0.005f;
+    private float lightIntensityChangeSpeed = 0.025f;
     private bool previouslyPressed = false;
     private CalibrationState calibrationState = CalibrationState.EnvironmentOffset;
 
@@ -101,6 +101,9 @@ public class Calibrator : MonoSingleton<Calibrator>
             if (Mathf.Abs(lJoystick.y) > 0.5f)
             {
                 var offset = (lightIntensityChangeSpeed * lJoystick.y);
+                if (lController.TryGetFeatureValue(CommonUsages.gripButton, out bool pressed))
+                    if (pressed)
+                        offset *= 10f;
 
                 switch(calibrationState)
                 {
