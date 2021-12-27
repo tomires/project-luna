@@ -93,9 +93,10 @@ public class Playback : MonoBehaviour
     private void RenderPosition(int room, Vector3 position)
     {
         var lineRenderer = LineRenderers[room];
-        var offset = lineRenderer.transform.position;
+        var offset = lineRenderer.transform.position - 4 * Vector3.forward;
         var pos = lineRenderer.positionCount++;
-        lineRenderer.SetPosition(pos, position + offset - 4 * Vector3.forward + 1.25f * Vector3.right); /* TODO */
+        lineRenderer.SetPosition(pos, 
+            Quaternion.Inverse(environmentOFfsetRotation) * (position - environmentOffsetPosition) + offset);
     }
 
     private void RenderCollision(int room)
