@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class Playback : MonoBehaviour
 {
+    [SerializeField] private bool showEnvironment = true;
     [SerializeField] private RenderTexture outputTexture;
     [SerializeField] private TextMesh metadataText;
     [SerializeField] private GameObject collisionPrefab;
@@ -64,7 +65,7 @@ public class Playback : MonoBehaviour
                         time = int.Parse(line[1]);
                         break;
                     case Constants.LogActions.RoomChange:
-                        if(room != 0)
+                        if (room != 0)
                             DisplayRoomTime(room - 1, time);
                         room = int.Parse(line[1]);
                         break;
@@ -89,6 +90,7 @@ public class Playback : MonoBehaviour
 
     private IEnumerator SaveLogIntoFile(string path)
     {
+        if (!showEnvironment) HideEnvironment();
         yield return new WaitForEndOfFrame();
         var data = outputTexture.ToTexture2D().EncodeToPNG();
         File.WriteAllBytes(path, data);
@@ -127,5 +129,11 @@ public class Playback : MonoBehaviour
     private void DisplayMetadata(string filename, float minIntensity, float maxIntensity)
     {
         metadataText.text = $"{filename}\nLmin: {minIntensity}\nLmax: {maxIntensity}";
+    }
+
+    private void HideEnvironment()
+    {
+        foreach (var renderer in FindObjectsOfType<MeshRenderer>())
+            renderer.enabled = false;
     }
 }
