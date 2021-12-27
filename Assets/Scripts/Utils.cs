@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 public static class Utils
 {
@@ -15,5 +16,10 @@ public static class Utils
         tex.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
         tex.Apply();
         return tex;
+    }
+
+    public static string GetFilename(string path)
+    {
+        return path.Split('\\').Last();
     }
 }

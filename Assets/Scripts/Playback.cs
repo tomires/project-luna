@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class Playback : MonoBehaviour
 {
     [SerializeField] private RenderTexture outputTexture;
+    [SerializeField] private TextMesh metadataText;
     [SerializeField] private GameObject collisionPrefab;
     [SerializeField] private GameObject stampPrefab;
     private List<LineRenderer> LineRenderers;
@@ -68,7 +69,11 @@ public class Playback : MonoBehaviour
                         room = int.Parse(line[1]);
                         break;
                     case Constants.LogActions.Collision:
-                        RenderCollision(room - 1);
+                        if (room != 0)
+                            RenderCollision(room - 1);
+                        break;
+                    case Constants.LogActions.IntensitySetting:
+                        DisplayMetadata(Utils.GetFilename(path), float.Parse(line[1]), float.Parse(line[2]));
                         break;
                     case Constants.LogActions.ExperimentEnd:
                         DisplayRoomTime(room - 1, time);
@@ -117,5 +122,10 @@ public class Playback : MonoBehaviour
         var stamp = Instantiate(stampPrefab);
         stamp.GetComponent<TextMesh>().text = $"Room {room}\n{time}s";
         stamp.transform.position += LineRenderers[room].transform.position;
+    }
+
+    private void DisplayMetadata(string filename, float minIntensity, float maxIntensity)
+    {
+        metadataText.text = $"{filename}\nLmin: {minIntensity}\nLmax: {maxIntensity}";
     }
 }
