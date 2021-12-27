@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputTexture: {fileID: 8400000, guid: 15ba356263e0495498218f84c762236b, type: 2}
   collisionPrefab: {fileID: 8619982152292905325, guid: 64379d92e621171459e3961c2036f5fe, type: 3}
+  stampPrefab: {fileID: 4887467147707411558, guid: 7ed555db1ef5f1145955e13f4abd3fe6, type: 3}
 --- !u!4 &1072667363
 Transform:
   m_ObjectHideFlags: 0

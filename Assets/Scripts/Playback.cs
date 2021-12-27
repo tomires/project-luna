@@ -10,6 +10,7 @@ public class Playback : MonoBehaviour
 {
     [SerializeField] private RenderTexture outputTexture;
     [SerializeField] private GameObject collisionPrefab;
+    [SerializeField] private GameObject stampPrefab;
     private List<LineRenderer> LineRenderers;
     private Vector3 environmentOffsetPosition;
     private Quaternion environmentOFfsetRotation;
@@ -59,12 +60,18 @@ public class Playback : MonoBehaviour
                         environmentOFfsetRotation = Quaternion.Euler(Utils.DeserializeVector3(line[2]));
                         break;
                     case Constants.LogActions.TimeTick:
+                        time = int.Parse(line[1]);
                         break;
                     case Constants.LogActions.RoomChange:
+                        if(room != 0)
+                            DisplayRoomTime(room - 1, time);
                         room = int.Parse(line[1]);
                         break;
                     case Constants.LogActions.Collision:
                         RenderCollision(room - 1);
+                        break;
+                    case Constants.LogActions.ExperimentEnd:
+                        DisplayRoomTime(room - 1, time);
                         break;
                     default:
                         break;
@@ -103,5 +110,12 @@ public class Playback : MonoBehaviour
     {
         var lineRenderer = LineRenderers[room];
         Instantiate(collisionPrefab, lineRenderer.GetPosition(lineRenderer.positionCount - 1), Quaternion.identity);
+    }
+
+    private void DisplayRoomTime(int room, int time)
+    {
+        var stamp = Instantiate(stampPrefab);
+        stamp.GetComponent<TextMesh>().text = $"Room {room}\n{time}s";
+        stamp.transform.position += LineRenderers[room].transform.position;
     }
 }
