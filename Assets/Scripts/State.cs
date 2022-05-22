@@ -86,6 +86,7 @@ public class State : NetworkBehaviour
     private void RoomChanged(int oldRoom, int newRoom)
     {
         OnRoomChanged?.Invoke(newRoom);
+        AudioPlayer.Instance.PlaySound(Constants.Sounds.Confirmation);
         EnvironmentSwitcher.Instance.MoveToNextEnvironment();
     }
 

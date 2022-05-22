@@ -38,4 +38,9 @@ public class Constants
         public const string EnvironmentOffset = "O";
         public const string IntensitySetting = "L";
     }
+
+    public enum Sounds
+    {
+        Confirmation, Up, Down
+    }
 }

@@ -105,6 +105,8 @@ public class Calibrator : MonoSingleton<Calibrator>
                     if (pressed)
                         offset *= 10f;
 
+                AudioPlayer.Instance.PlaySound(offset > 0 ? Constants.Sounds.Up : Constants.Sounds.Down);
+
                 switch(calibrationState)
                 {
                     case CalibrationState.MinLightIntensity:
