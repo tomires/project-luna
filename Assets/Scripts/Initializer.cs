@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class Initializer : MonoSingleton<Initializer>
 {
-    [SerializeField] private bool supervisor = false;
+    public bool supervisor = false;
 
-    private void Awake()
+    private void Start()
     {
         if(supervisor)
             SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);

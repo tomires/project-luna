@@ -10,6 +10,22 @@ public class Constants
     public const float PlaybackEnvironmentSpacing = 0.5f;
     public const string LogExtension = "luna";
     public static string LogPath = $"{Application.persistentDataPath}/log_{DateTime.Now.ToString("yyyyMMdd_HHmm")}.{LogExtension}";
+    public static string InitializationGameObjectName = "Initialization";
+
+    public class ScenePaths
+    {
+        public static string Initialization = "Assets/Initialization.unity";
+        public static string Environment = "Assets/Environment.unity";
+        public static string Supervisor = "Assets/Supervisor.unity";
+        public static string TestSubject = "Assets/TestSubject.unity";
+    }
+
+    public class BuildPaths
+    {
+        public static readonly string testSubject = $"Build/Quest";
+        public static readonly string supervisorAndroid = $"Build/Android";
+        public static readonly string supervisorIOS = $"Build/iOS";
+    }
 
     public class LogActions
     {
