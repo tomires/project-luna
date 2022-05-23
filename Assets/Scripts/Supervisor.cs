@@ -27,8 +27,9 @@ public class Supervisor : MonoSingleton<Supervisor>
     [SerializeField] private Text roomText;
     [SerializeField] private GameObject collisionPrefab;
 
-    [Header("Supervisor")]
+    [Header("Completion")]
     [SerializeField] private GameObject completionPanel;
+    [SerializeField] private Button returnToDeviceSelectionButton;
 
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
@@ -43,6 +44,7 @@ public class Supervisor : MonoSingleton<Supervisor>
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoad(scene);
         manualIpConfirmButton.onClick.AddListener(OnManualIpEntry);
+        returnToDeviceSelectionButton.onClick.AddListener(OnReturnToDeviceSelection);
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         lineRenderer = GetComponent<LineRenderer>();
@@ -66,6 +68,13 @@ public class Supervisor : MonoSingleton<Supervisor>
         networkDiscovery.StopDiscovery();
         networkManager.StartClient(uri);
         ConnectToServer(uri);
+    }
+
+    private void OnReturnToDeviceSelection()
+    {
+        var allObjects = FindObjectsOfType<GameObject>();
+        foreach (var go in allObjects) Destroy(go);
+        SceneManager.LoadScene(Constants.InitializationScene);
     }
 
     private IEnumerator DrawLine()
