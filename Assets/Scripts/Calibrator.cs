@@ -145,9 +145,11 @@ public class Calibrator : MonoSingleton<Calibrator>
                 MinLightIntensity = MinLightIntensity;
                 break;
             case CalibrationState.MaxLightIntensity:
+                FindObjectOfType<State>().LuminanceLowerBound = MinLightIntensity;
                 MaxLightIntensity = MinLightIntensity;
                 break;
             case CalibrationState.Done:
+                FindObjectOfType<State>().LuminanceUpperBound = MaxLightIntensity;
                 if (FindObjectOfType<State>())
                     FindObjectOfType<State>().ChangeLevel();
                 else

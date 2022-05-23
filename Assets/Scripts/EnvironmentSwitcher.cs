@@ -64,6 +64,7 @@ public class EnvironmentSwitcher : MonoSingleton<EnvironmentSwitcher>
         var multiplier = lightMultipliers[currentEnvironment];
         var offset = multiplier * Calibrator.Instance.LightIntensityVariance;
         var intensity = Calibrator.Instance.MinLightIntensity + offset;
+        FindObjectOfType<State>().CurrentLuminance = intensity;
 
         foreach (var light in lights)
             light.intensity = intensity;

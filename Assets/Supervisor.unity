@@ -366,7 +366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &126288516
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2471,6 +2471,9 @@ MonoBehaviour:
   collisionCountText: {fileID: 460789868}
   timeText: {fileID: 1117289514}
   roomText: {fileID: 1605567934}
+  luminanceLowerBoundText: {fileID: 1379896296}
+  luminanceUpperBoundText: {fileID: 2072311611}
+  currentLuminanceText: {fileID: 126288515}
   collisionPrefab: {fileID: 8619982152292905325, guid: 64379d92e621171459e3961c2036f5fe, type: 3}
   completionPanel: {fileID: 739659786}
   returnToDeviceSelectionButton: {fileID: 1037008041}
@@ -2817,7 +2820,7 @@ GameObject:
   - component: {fileID: 1379896297}
   - component: {fileID: 1379896296}
   m_Layer: 5
-  m_Name: LowerBoundLuminanceValue
+  m_Name: LuminanceLowerBoundValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2875,7 +2878,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &1379896297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3973,7 +3976,7 @@ GameObject:
   - component: {fileID: 2072311612}
   - component: {fileID: 2072311611}
   m_Layer: 5
-  m_Name: UpperBoundLuminanceValue
+  m_Name: LuminanceUpperBoundValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4031,7 +4034,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &2072311612
 CanvasRenderer:
   m_ObjectHideFlags: 0

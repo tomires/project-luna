@@ -25,6 +25,9 @@ public class Supervisor : MonoSingleton<Supervisor>
     [SerializeField] private Text collisionCountText;
     [SerializeField] private Text timeText;
     [SerializeField] private Text roomText;
+    [SerializeField] private Text luminanceLowerBoundText;
+    [SerializeField] private Text luminanceUpperBoundText;
+    [SerializeField] private Text currentLuminanceText;
     [SerializeField] private GameObject collisionPrefab;
 
     [Header("Completion")]
@@ -134,6 +137,9 @@ public class Supervisor : MonoSingleton<Supervisor>
         state.OnCollision = UpdateCollisionCount;
         state.TimeTicked = UpdateTime;
         state.OnRoomChanged = UpdateRoom;
+        state.OnLuminanceLowerBoundChanged = UpdateLuminanceLowerBound;
+        state.OnLuminanceUpperBoundChanged = UpdateLuminanceUpperBound;
+        state.OnCurrentLuminanceChanged = UpdateCurrentLuminance;
         state.OnExperimentEnded = EndExperiment;
     }
 
@@ -154,6 +160,21 @@ public class Supervisor : MonoSingleton<Supervisor>
         roomText.text = newRoom.ToString();
         ArrowManager.Instance.ChangeArrowDirection();
         ResetLine();
+    }
+
+    private void UpdateLuminanceLowerBound(float luminance)
+    {
+        luminanceLowerBoundText.text = ((int)luminance).ToString();
+    }
+
+    private void UpdateLuminanceUpperBound(float luminance)
+    {
+        luminanceUpperBoundText.text = ((int)luminance).ToString();
+    }
+
+    private void UpdateCurrentLuminance(float luminance)
+    {
+        currentLuminanceText.text = ((int)luminance).ToString();
     }
 
     private void EndExperiment()

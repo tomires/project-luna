@@ -10,6 +10,9 @@ public class State : NetworkBehaviour
     public Action<int> TimeTicked;
     public Action<int> OnCollision;
     public Action<int> OnRoomChanged;
+    public Action<float> OnLuminanceLowerBoundChanged;
+    public Action<float> OnLuminanceUpperBoundChanged;
+    public Action<float> OnCurrentLuminanceChanged;
     public Action OnExperimentEnded;
 
     [SyncVar(hook = nameof(SecondsSinceStartChanged))]
@@ -20,6 +23,15 @@ public class State : NetworkBehaviour
 
     [SyncVar(hook = nameof(RoomChanged))]
     public int CurrentRoom = 0;
+
+    [SyncVar(hook = nameof(LuminanceLowerBoundChanged))]
+    public float LuminanceLowerBound = 0;
+
+    [SyncVar(hook = nameof(LuminanceUpperBoundChanged))]
+    public float LuminanceUpperBound = 0;
+
+    [SyncVar(hook = nameof(CurrentLuminanceChanged))]
+    public float CurrentLuminance = 0;
 
     private Logger logger;
     private bool logging = false;
@@ -93,5 +105,20 @@ public class State : NetworkBehaviour
     private void SecondsSinceStartChanged(int oldSeconds, int newSeconds)
     {
         TimeTicked?.Invoke(newSeconds);
+    }
+
+    private void LuminanceLowerBoundChanged(float oldLuminance, float newLuminance)
+    {
+        OnLuminanceLowerBoundChanged?.Invoke(newLuminance);
+    }
+
+    private void LuminanceUpperBoundChanged(float oldLuminance, float newLuminance)
+    {
+        OnLuminanceUpperBoundChanged?.Invoke(newLuminance);
+    }
+
+    private void CurrentLuminanceChanged(float oldLuminance, float newLuminance)
+    {
+        OnCurrentLuminanceChanged?.Invoke(newLuminance);
     }
 }
