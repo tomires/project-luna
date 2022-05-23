@@ -664,7 +664,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Return to device selection
+  m_Text: Exit application
 --- !u!222 &328862093
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2078,7 +2078,7 @@ GameObject:
   - component: {fileID: 1037008042}
   - component: {fileID: 1037008041}
   m_Layer: 5
-  m_Name: ReturnToDeviceSelectionButton
+  m_Name: QuitApplicationButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2481,7 +2481,7 @@ MonoBehaviour:
   luminanceThumbTopReference: {fileID: 1271533629}
   luminanceThumbBottomReference: {fileID: 2003362975}
   completionPanel: {fileID: 739659786}
-  returnToDeviceSelectionButton: {fileID: 1037008041}
+  quitApplicationButton: {fileID: 1037008041}
 --- !u!4 &1188638760
 Transform:
   m_ObjectHideFlags: 0

@@ -35,7 +35,7 @@ public class Supervisor : MonoSingleton<Supervisor>
 
     [Header("Completion")]
     [SerializeField] private GameObject completionPanel;
-    [SerializeField] private Button returnToDeviceSelectionButton;
+    [SerializeField] private Button quitApplicationButton;
 
     private NetworkManager networkManager;
     private NetworkDiscovery networkDiscovery;
@@ -50,7 +50,7 @@ public class Supervisor : MonoSingleton<Supervisor>
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoad(scene);
         manualIpConfirmButton.onClick.AddListener(OnManualIpEntry);
-        returnToDeviceSelectionButton.onClick.AddListener(OnReturnToDeviceSelection);
+        quitApplicationButton.onClick.AddListener(() => Application.Quit());
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         lineRenderer = GetComponent<LineRenderer>();
@@ -74,13 +74,6 @@ public class Supervisor : MonoSingleton<Supervisor>
         networkDiscovery.StopDiscovery();
         networkManager.StartClient(uri);
         ConnectToServer(uri);
-    }
-
-    private void OnReturnToDeviceSelection()
-    {
-        var allObjects = FindObjectsOfType<GameObject>();
-        foreach (var go in allObjects) Destroy(go);
-        SceneManager.LoadScene(Constants.InitializationScene);
     }
 
     private IEnumerator DrawLine()
