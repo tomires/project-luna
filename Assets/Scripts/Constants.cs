@@ -22,8 +22,8 @@ public class Constants
 
     public class BuildPaths
     {
-        public static readonly string testSubject = $"Build/Quest";
-        public static readonly string supervisorAndroid = $"Build/Android";
+        public static readonly string testSubject = $"Build/luna-quest.apk";
+        public static readonly string supervisorAndroid = $"Build/luna-mobile.apk";
         public static readonly string supervisorIOS = $"Build/iOS";
     }
 

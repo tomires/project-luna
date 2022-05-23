@@ -46,7 +46,7 @@ public class Builder
     {
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene(Constants.ScenePaths.Initialization);
-        GameObject.Find(Constants.InitializationGameObjectName).GetComponent<Initializer>().supervisor = true;
+        GameObject.Find(Constants.InitializationGameObjectName).GetComponent<Initializer>().supervisor = enabled;
         EditorSceneManager.SaveOpenScenes();
     }
 }
