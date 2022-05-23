@@ -27,7 +27,8 @@ public class EnvironmentSwitcher : MonoSingleton<EnvironmentSwitcher>
         {
             environments[currentEnvironment - 1].SetActive(false);
             environments[currentEnvironment].SetActive(true);
-            SetLights();
+            if (!Initializer.Instance.supervisor)
+                SetLights();
         }
         else if (currentEnvironment == environments.Count)
         {

@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Initializer : MonoSingleton<Initializer>
@@ -7,6 +6,7 @@ public class Initializer : MonoSingleton<Initializer>
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         if(supervisor)
             SceneManager.LoadScene("Supervisor", LoadSceneMode.Additive);
         else
