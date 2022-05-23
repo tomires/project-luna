@@ -29,6 +29,9 @@ public class Supervisor : MonoSingleton<Supervisor>
     [SerializeField] private Text luminanceUpperBoundText;
     [SerializeField] private Text currentLuminanceText;
     [SerializeField] private GameObject collisionPrefab;
+    [SerializeField] private Transform luminanceThumb;
+    [SerializeField] private Transform luminanceThumbTopReference;
+    [SerializeField] private Transform luminanceThumbBottomReference;
 
     [Header("Completion")]
     [SerializeField] private GameObject completionPanel;
@@ -175,6 +178,11 @@ public class Supervisor : MonoSingleton<Supervisor>
     private void UpdateCurrentLuminance(float luminance)
     {
         currentLuminanceText.text = ((int)luminance).ToString();
+        var thumbPosition = luminanceThumb.position;
+        var offset = luminanceThumbTopReference.position.y - luminanceThumbBottomReference.position.y;
+        var relativeLuminance = (luminance - state.LuminanceLowerBound) / (state.LuminanceUpperBound - state.LuminanceLowerBound);
+        thumbPosition.y = luminanceThumbBottomReference.position.y + offset * relativeLuminance;
+        luminanceThumb.position = thumbPosition;
     }
 
     private void EndExperiment()

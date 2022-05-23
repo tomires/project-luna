@@ -25,13 +25,13 @@ public class State : NetworkBehaviour
     public int CurrentRoom = 0;
 
     [SyncVar(hook = nameof(LuminanceLowerBoundChanged))]
-    public float LuminanceLowerBound = 0;
+    public float LuminanceLowerBound = -1;
 
     [SyncVar(hook = nameof(LuminanceUpperBoundChanged))]
-    public float LuminanceUpperBound = 0;
+    public float LuminanceUpperBound = -1;
 
     [SyncVar(hook = nameof(CurrentLuminanceChanged))]
-    public float CurrentLuminance = 0;
+    public float CurrentLuminance = -1;
 
     private Logger logger;
     private bool logging = false;
