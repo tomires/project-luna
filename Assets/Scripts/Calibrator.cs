@@ -138,21 +138,25 @@ public class Calibrator : MonoSingleton<Calibrator>
             CalibrationState.MinLightIntensity => CalibrationState.MaxLightIntensity,
             _ => CalibrationState.Done
         };
+        var networkState = FindObjectOfType<State>();
 
-        switch(calibrationState)
+        switch (calibrationState)
         {
             case CalibrationState.MinLightIntensity:
                 MinLightIntensity = MinLightIntensity;
                 break;
             case CalibrationState.MaxLightIntensity:
-                FindObjectOfType<State>().LuminanceLowerBound = MinLightIntensity;
+                if (networkState)
+                    networkState.LuminanceLowerBound = MinLightIntensity;
                 MaxLightIntensity = MinLightIntensity;
                 break;
             case CalibrationState.Done:
-                FindObjectOfType<State>().LuminanceLowerBound = MinLightIntensity;
-                FindObjectOfType<State>().LuminanceUpperBound = MaxLightIntensity;
-                if (FindObjectOfType<State>())
-                    FindObjectOfType<State>().ChangeLevel();
+                if (networkState)
+                {
+                    networkState.LuminanceLowerBound = MinLightIntensity;
+                    networkState.LuminanceUpperBound = MaxLightIntensity;
+                    networkState.ChangeLevel();
+                }
                 else
                     lightSettingText.text = "Connect phone!";
                 break;
