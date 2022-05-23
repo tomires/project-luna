@@ -43,6 +43,7 @@ public class Supervisor : MonoSingleton<Supervisor>
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += (scene, loadSceneMode) => OnSceneLoad(scene);
         manualIpConfirmButton.onClick.AddListener(OnManualIpEntry);
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         lineRenderer = GetComponent<LineRenderer>();
         networkManager = FindObjectOfType<NetworkManager>();
