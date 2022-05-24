@@ -8,7 +8,8 @@ public class IpDisplay : MonoBehaviour
 {
     void Start()
     {
-        GetComponent<Text>().text = GetLocalIPv4();
+        if (!Initializer.Instance.supervisor)
+            GetComponent<Text>().text = GetLocalIPv4();
     }
 
     public string GetLocalIPv4()
