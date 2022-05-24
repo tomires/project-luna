@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.UI;
 using System;
+using System.Threading.Tasks;
 
 public class Calibrator : MonoSingleton<Calibrator>
 {
@@ -54,6 +55,7 @@ public class Calibrator : MonoSingleton<Calibrator>
     {
         rController = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
         lController = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        PeriodicallyCommunicateLightIntensity();
     }
 
     void Update()
@@ -128,6 +130,30 @@ public class Calibrator : MonoSingleton<Calibrator>
         lightSettingText.text = 
             (calibrationState == CalibrationState.MinLightIntensity
             ? "Lmin " : "Lmax ") + string.Format("{0:0.00}", intensity);
+    }
+
+    private async void PeriodicallyCommunicateLightIntensity()
+    {
+        while (true)
+        {
+            await Task.Delay(1000);
+
+            var networkState = FindObjectOfType<State>();
+
+            switch (calibrationState)
+            {
+                case CalibrationState.MinLightIntensity:
+                    if (networkState)
+                        networkState.LuminanceLowerBound = MinLightIntensity;
+                    break;
+                case CalibrationState.MaxLightIntensity:
+                    if (networkState)
+                        networkState.LuminanceUpperBound = MaxLightIntensity;
+                    break;
+                case CalibrationState.Done:
+                    return;
+            }
+        }
     }
 
     private void AdvanceState()
