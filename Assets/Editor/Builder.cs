@@ -1,15 +1,19 @@
-using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Builder
 {
-    public static string[] Scenes = {
+    public static string[] LiveScenes = {
         Constants.ScenePaths.Initialization,
         Constants.ScenePaths.Environment,
         Constants.ScenePaths.Supervisor,
         Constants.ScenePaths.TestSubject,
+    };
+
+    public static string[] PlaybackScenes = {
+        Constants.ScenePaths.Playback,
+        Constants.ScenePaths.Environment,
     };
 
     [MenuItem("Build/Build TestSubject")]
@@ -19,7 +23,7 @@ public class Builder
         string deployPath = Constants.BuildPaths.testSubject;
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.AutoRotation;
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
-        BuildPipeline.BuildPlayer(Scenes, deployPath, BuildTarget.Android, BuildOptions.None);
+        BuildPipeline.BuildPlayer(LiveScenes, deployPath, BuildTarget.Android, BuildOptions.None);
     }
 
     [MenuItem("Build/Build Supervisor (Android)")]
@@ -29,7 +33,7 @@ public class Builder
         string deployPath = Constants.BuildPaths.supervisorAndroid;
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
-        BuildPipeline.BuildPlayer(Scenes, deployPath, BuildTarget.Android, BuildOptions.None);
+        BuildPipeline.BuildPlayer(LiveScenes, deployPath, BuildTarget.Android, BuildOptions.None);
     }
 
     [MenuItem("Build/Build Supervisor (iOS)")]
@@ -39,7 +43,23 @@ public class Builder
         string deployPath = Constants.BuildPaths.supervisorIOS;
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.iOS, BuildTarget.iOS);
-        BuildPipeline.BuildPlayer(Scenes, deployPath, BuildTarget.iOS, BuildOptions.None);
+        BuildPipeline.BuildPlayer(LiveScenes, deployPath, BuildTarget.iOS, BuildOptions.None);
+    }
+
+    [MenuItem("Build/Build Playback App (Windows)")]
+    public static void BuildPlaybackAppWindows()
+    {
+        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+        BuildPipeline.BuildPlayer(PlaybackScenes, Constants.BuildPaths.playbackWindows, 
+            BuildTarget.StandaloneWindows64, BuildOptions.None);
+    }
+
+    [MenuItem("Build/Build Playback App (Linux)")]
+    public static void BuildPlaybackAppLinux()
+    {
+        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64);
+        BuildPipeline.BuildPlayer(PlaybackScenes, Constants.BuildPaths.playbackLinux,
+            BuildTarget.StandaloneLinux64, BuildOptions.None);
     }
 
     private static void SetSupervisorMode(bool enabled)

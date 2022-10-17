@@ -12,6 +12,7 @@ public class Constants
     public const string LogExtension = "luna";
     public static string LogPath = $"{Application.persistentDataPath}/log_{DateTime.Now.ToString("yyyyMMdd_HHmm")}.{LogExtension}";
     public static string InitializationGameObjectName = "Initialization";
+    public static string PathCliParameter = "-logPath";
 
     public class ScenePaths
     {
@@ -19,6 +20,7 @@ public class Constants
         public static string Environment = "Assets/Environment.unity";
         public static string Supervisor = "Assets/Supervisor.unity";
         public static string TestSubject = "Assets/TestSubject.unity";
+        public static string Playback = "Assets/Playback.unity";
     }
 
     public class BuildPaths
@@ -26,6 +28,8 @@ public class Constants
         public static readonly string testSubject = $"Build/luna-quest.apk";
         public static readonly string supervisorAndroid = $"Build/luna-mobile.apk";
         public static readonly string supervisorIOS = $"Build/iOS";
+        public static readonly string playbackWindows = $"Build/PlaybackWin/LunaPlayback.exe";
+        public static readonly string playbackLinux = $"Build/PlaybackLinux/LunaPlayback";
     }
 
     public class LogActions

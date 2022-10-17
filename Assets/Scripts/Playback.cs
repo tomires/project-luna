@@ -3,6 +3,7 @@ using SFB;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,11 +27,40 @@ public class Playback : MonoBehaviour
         networkManager.StartHost();
     }
 
-    private void OnSceneLoad(Scene scene)
+    private async void OnSceneLoad(Scene scene)
     {
         if (scene.name != Constants.EnvironmentScene) return;
+        await Task.Delay(100);
         EnvironmentSwitcher.Instance.SwitchToPlaybackLayout();
         GetLineRenderers();
+
+        if (Application.isEditor)
+            ShowLogSelectionPrompt();
+        else
+        {
+            var readingPathArg = false;
+            var path = string.Empty;
+
+            foreach (var arg in System.Environment.GetCommandLineArgs())
+            {
+                if (arg == Constants.PathCliParameter)
+                    readingPathArg = true;
+                else if (readingPathArg)
+                {
+                    path = arg;
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(path))
+                ShowLogSelectionPrompt();
+            else
+                PlayLog(new string[] { path });
+        }
+    }
+
+    private void ShowLogSelectionPrompt()
+    {
         StandaloneFileBrowser.OpenFilePanelAsync("Select log to process", "", Constants.LogExtension, false, PlayLog);
     }
 
