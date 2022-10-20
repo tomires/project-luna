@@ -46,7 +46,7 @@ public class Builder
         BuildPipeline.BuildPlayer(LiveScenes, deployPath, BuildTarget.iOS, BuildOptions.None);
     }
 
-    [MenuItem("Build/Build Playback App (Windows)")]
+    [MenuItem("Build/Build Playback (Windows)")]
     public static void BuildPlaybackAppWindows()
     {
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
@@ -54,12 +54,20 @@ public class Builder
             BuildTarget.StandaloneWindows64, BuildOptions.None);
     }
 
-    [MenuItem("Build/Build Playback App (Linux)")]
+    [MenuItem("Build/Build Playback (Linux)")]
     public static void BuildPlaybackAppLinux()
     {
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64);
         BuildPipeline.BuildPlayer(PlaybackScenes, Constants.BuildPaths.playbackLinux,
             BuildTarget.StandaloneLinux64, BuildOptions.None);
+    }
+
+    [MenuItem("Build/Build Playback (macOS)")]
+    public static void BuildPlaybackAppMac()
+    {
+        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+        BuildPipeline.BuildPlayer(PlaybackScenes, Constants.BuildPaths.playbackMac,
+            BuildTarget.StandaloneOSX, BuildOptions.None);
     }
 
     private static void SetSupervisorMode(bool enabled)

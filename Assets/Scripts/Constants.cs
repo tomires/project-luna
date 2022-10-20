@@ -30,6 +30,7 @@ public class Constants
         public static readonly string supervisorIOS = $"Build/iOS";
         public static readonly string playbackWindows = $"Build/PlaybackWin/LunaPlayback.exe";
         public static readonly string playbackLinux = $"Build/PlaybackLinux/LunaPlayback";
+        public static readonly string playbackMac = $"Build/PlaybackMac/LunaPlayback";
     }
 
     public class LogActions
